@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de Documentos HRZ</title>
+    <!-- Agregamos Font Awesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+}
+.form-group {
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+.format-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+.format-option {
+    flex: 1;
+    max-width: 200px;
+    position: relative;
+}
+.format-option input[type="radio"] {
+    display: none;
+}
+.format-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.format-label i {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+/* Estilos para Word */
+.format-option input[type="radio"][value="docx"] + .format-label {
+    color: #2B579A;
+}
+.format-option input[type="radio"][value="docx"]:checked + .format-label {
+    background-color: #2B579A15;
+    border-color: #2B579A;
+}
+/* Estilos para TXT */
+.format-option input[type="radio"][value="txt"] + .format-label {
+    color: #666666;
+}
+.format-option input[type="radio"][value="txt"]:checked + .format-label {
+    background-color: #66666615;
+    border-color: #666666;
+}
+/* Estilos para PDF */
+.format-option input[type="radio"][value="pdf"] + .format-label {
+    color: #FF0000;
+}
+.format-option input[type="radio"][value="pdf"]:checked + .format-label {
+    background-color: #FF000015;
+    border-color: #FF0000;
+}
+/* Estilos para Excel */
+.format-option input[type="radio"][value="xlsx"] + .format-label {
+    color: #217346;
+}
+.format-option input[type="radio"][value="xlsx"]:checked + .format-label {
+    background-color: #21734615;
+    border-color: #217346;
+}
+/* Estilos para CSV */
+.format-option input[type="radio"][value="csv"] + .format-label {
+    color: #1d6f42;
+}
+.format-option input[type="radio"][value="csv"]:checked + .format-label {
+    background-color: #1d6f4215;
+    border-color: #1d6f42;
+}
+/* Estilos para PowerPoint */
+.format-option input[type="radio"][value="pptx"] + .format-label {
+    color: #C43E1C;
+}
+.format-option input[type="radio"][value="pptx"]:checked + .format-label {
+    background-color: #C43E1C15;
+    border-color: #C43E1C;
+}
+button {
+    background-color: #000000;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+button:hover {
+    background-color: #333333;
+}
+h1 {
+    color: #000000;
+    text-align: center;
+    margin-bottom: 30px;
+}
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #000000;
+}
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    animation: modalSlideDown 0.3s ease-out;
+}
+
+@keyframes modalSlideDown {
+    from {transform: translateY(-100px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal-button.confirm {
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-button.cancel {
+    background-color: #6c757d;
+    color: white;
+}
+    </style>
+</head>
+<body>
+    <h1>Generador de Documentos HRZ</h1>
+    <div class="form-container">
+        <div class="form-group">
+            <label style="text-align: center; display: block;">Seleccione el formato:</label>
+            <div class="format-options">
+                <div class="format-option">
+                    <input type="radio" id="docx" name="formato" value="docx" checked>
+                    <label for="docx" class="format-label">
+                        <i class="far fa-file-word"></i>
+                        <span>Word</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="txt" name="formato" value="txt">
+                    <label for="txt" class="format-label">
+                        <i class="far fa-file-text"></i>
+                        <span>Texto</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="pdf" name="formato" value="pdf">
+                    <label for="pdf" class="format-label">
+                        <i class="far fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="xlsx" name="formato" value="xlsx">
+                    <label for="xlsx" class="format-label">
+                        <i class="far fa-file-excel"></i>
+                        <span>Excel</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="pptx" name="formato" value="pptx">
+                    <label for="pptx" class="format-label">
+                        <i class="fas fa-file-powerpoint"></i>
+                        <span>PowerPoint</span>
+                    </label>
+                </div>
+                <div class="format-option">
+                    <input type="radio" id="csv" name="formato" value="csv">
+                    <label for="csv" class="format-label">
+                        <i class="fas fa-file-csv"></i>
+                        <span>CSV</span>
+                    </label>
+                </div>                
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Ingrese su prompt:</label>
+            <textarea id="prompt" required placeholder="Escriba aquí su texto..."></textarea>
+        </div>
+        <div style="display: flex; gap: 20px; justify-content: center;">
+            <button type="button" onclick="generarDocumento()">
+                <i class="fas fa-magic"></i> Generar Documento
+            </button>
+            <button type="button" onclick="cerrarServidor()" style="background-color: #dc3545;">
+                <i class="fas fa-power-off"></i> Cerrar App
+            </button>
+        </div>
+    </div>
+
+    <!-- Agregar el modal antes del cierre del body -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">Confirmar cierre</h2>
+            <p>¿Está seguro que desea cerrar la aplicación?</p>
+            <div class="modal-buttons">
+                <button class="modal-button cancel" onclick="closeModal()">Cancelar</button>
+                <button class="modal-button confirm" onclick="confirmarCierre()">Cerrar App</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    async function generarDocumento() {
+        const prompt = document.getElementById('prompt').value;
+        const formato = document.querySelector('input[name="formato"]:checked').value;
+        
+        if (!prompt) {
+            alert('Por favor ingrese un prompt');
+            return;
+        }
+
+        try {
+            // Crear objeto FormData para enviar los datos
+            const formData = new FormData();
+            formData.append('prompt', prompt);
+            formData.append('formato', formato);
+
+            // Realizar la petición POST al servidor
+            const response = await fetch('/', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                // Obtener el blob de la respuesta
+                const blob = await response.blob();
+                
+                // Crear URL del blob
+                const url = window.URL.createObjectURL(blob);
+                
+                // Crear elemento <a> temporal para la descarga
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = response.headers.get('content-disposition')?.split('filename=')[1] || 'documento';
+                
+                // Simular clic para iniciar la descarga
+                document.body.appendChild(a);
+                a.click();
+                
+                // Limpiar
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } else {
+                alert('Error al generar el documento');
+            }
+        } catch (error) {
+            alert('Error al generar el documento: ' + error);
+        }
+    }
+
+    function cerrarServidor() {
+        document.getElementById('confirmModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('confirmModal').style.display = 'none';
+    }
+
+    async function confirmarCierre() {
+        try {
+            const response = await fetch('/shutdown', { method: 'POST' });
+            if (response.ok) {
+                window.close(); // Intenta cerrar la ventana
+            }
+        } catch (error) {
+            console.error('Error al cerrar el servidor:', error);
+        }
+    }
+
+    // Cerrar modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        let modal = document.getElementById('confirmModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+    </script>
+</body>
+</html>

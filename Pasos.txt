@@ -1,0 +1,41 @@
+1. Importación de módulos de Flask para funcionalidad web básica
+2. Importación de Google Generative AI para interactuar con Gemini
+3. Importaciones para manejo de documentos Word
+4. Importaciones para generación de PDFs
+5. Importaciones de bibliotecas estándar de Python
+6. Importación de Pandas para manejo de datos tabulares
+7. Importaciones para manejo de Excel
+8. Importaciones adicionales para Word
+9. Importaciones para PowerPoint
+10. Inicialización de la aplicación Flask
+11. Configuración de credenciales para Gemini
+12. Función auxiliar para procesar contenido Excel/CSV
+13. Definición de la ruta principal
+14. Obtención de datos del formulario
+15. Lógica para generación de presentación PowerPoint
+16. Generación de contenido con Gemini
+17. Validación de respuesta
+18. Lógica para generación de Excel/CSV
+19. Lógica para generación de otros formatos
+20. Procesamiento específico para PowerPoint
+21. Crear nueva presentación
+22. Definición de estilos consistentes
+23. Colores para el texto
+24. Función para aplicar fondo a diapositivas
+25. Función para crear diapositiva de título
+26. Función para crear diapositiva de contenido
+27. Procesar contenido y crear diapositivas
+28. Guardar presentación
+29. Procesamiento específico para Excel
+30. Procesamiento específico para CSV
+31. Procesamiento de documentos de texto
+32. Función auxiliar para generar nombres de archivo
+33. Procesamiento específico para Word
+34. Procesamiento específico para PDF
+35. Función auxiliar para dibujar texto con ajuste de línea
+36. Función auxiliar para centrar título
+37. Función auxiliar para agregar números de página
+38. Procesar contenido línea por línea para PDF
+39. Procesamiento específico para TXT
+40. Ruta para apagar el servidor
+41. Punto de entrada de la aplicación
