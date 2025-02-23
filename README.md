@@ -1,4 +1,5 @@
 # 🚀 Generador de Documentos con IA
+![image](https://github.com/user-attachments/assets/cbd67e1a-b31e-4617-90b2-ebda0dfcf565)
 
 ## 📝 Descripción
 Este proyecto es una aplicación web que utiliza Inteligencia Artificial (Gemini) para generar automáticamente documentos en múltiples formatos. La aplicación permite a los usuarios crear presentaciones, hojas de cálculo y documentos de texto de manera profesional con solo introducir un prompt.
